@@ -1,0 +1,36 @@
+E:\Thao\Thuctapnhom_Thao\Thuctapnhomdemo\Thuctapnhomdemo\bin\Debug\Thuctapnhomdemo.exe.config
+E:\Thao\Thuctapnhom_Thao\Thuctapnhomdemo\Thuctapnhomdemo\bin\Debug\Thuctapnhomdemo.exe
+E:\Thao\Thuctapnhom_Thao\Thuctapnhomdemo\Thuctapnhomdemo\bin\Debug\Thuctapnhomdemo.pdb
+E:\Thao\Thuctapnhom_Thao\Thuctapnhomdemo\Thuctapnhomdemo\obj\Debug\Thuctapnhomdemo.csprojResolveAssemblyReference.cache
+E:\Thao\Thuctapnhom_Thao\Thuctapnhomdemo\Thuctapnhomdemo\obj\Debug\Thuctapnhomdemo.frmKhachhang.resources
+E:\Thao\Thuctapnhom_Thao\Thuctapnhomdemo\Thuctapnhomdemo\obj\Debug\Thuctapnhomdemo.frmMain.resources
+E:\Thao\Thuctapnhom_Thao\Thuctapnhomdemo\Thuctapnhomdemo\obj\Debug\Thuctapnhomdemo.Properties.Resources.resources
+E:\Thao\Thuctapnhom_Thao\Thuctapnhomdemo\Thuctapnhomdemo\obj\Debug\Thuctapnhomdemo.csproj.GenerateResource.Cache
+E:\Thao\Thuctapnhom_Thao\Thuctapnhomdemo\Thuctapnhomdemo\obj\Debug\Thuctapnhomdemo.exe
+E:\Thao\Thuctapnhom_Thao\Thuctapnhomdemo\Thuctapnhomdemo\obj\Debug\Thuctapnhomdemo.pdb
+E:\Thao\Thuctapnhom_Thao\Baitapnhom\Thuctapnhomdemo\bin\Debug\Thuctapnhomdemo.exe.config
+E:\Thao\Thuctapnhom_Thao\Baitapnhom\Thuctapnhomdemo\obj\Debug\Thuctapnhomdemo.exe
+E:\Thao\Thuctapnhom_Thao\Baitapnhom\Thuctapnhomdemo\obj\Debug\Thuctapnhomdemo.pdb
+E:\Thao\Thuctapnhom_Thao\Baitapnhom\Thuctapnhomdemo\obj\Debug\Thuctapnhomdemo.csprojResolveAssemblyReference.cache
+E:\Thao\Thuctapnhom_Thao\Baitapnhom\Thuctapnhomdemo\obj\Debug\Thuctapnhomdemo.frmMain.resources
+E:\Thao\Thuctapnhom_Thao\Baitapnhom\Thuctapnhomdemo\obj\Debug\Thuctapnhomdemo.frmPhieunhap.resources
+E:\Thao\Thuctapnhom_Thao\Baitapnhom\Thuctapnhomdemo\obj\Debug\Thuctapnhomdemo.Properties.Resources.resources
+E:\Thao\Thuctapnhom_Thao\Baitapnhom\Thuctapnhomdemo\obj\Debug\Thuctapnhomdemo.csproj.GenerateResource.Cache
+E:\Thao\Thuctapnhom_Thao\Baitapnhom\Thuctapnhomdemo\bin\Debug\Thuctapnhomdemo.exe
+E:\Thao\Thuctapnhom_Thao\Baitapnhom\Thuctapnhomdemo\bin\Debug\Thuctapnhomdemo.pdb
+E:\Thao\ThucTapNhom1\Baitapnhom\Thuctapnhomdemo\bin\Debug\Thuctapnhomdemo.exe.config
+E:\Thao\ThucTapNhom1\Baitapnhom\Thuctapnhomdemo\obj\Debug\Thuctapnhomdemo.exe
+E:\Thao\ThucTapNhom1\Baitapnhom\Thuctapnhomdemo\obj\Debug\Thuctapnhomdemo.pdb
+E:\Thao\ThucTapNhom1\Baitapnhom\Thuctapnhomdemo\bin\Debug\Thuctapnhomdemo.exe
+E:\Thao\ThucTapNhom1\Baitapnhom\Thuctapnhomdemo\bin\Debug\Thuctapnhomdemo.pdb
+E:\Thao\ThucTapNhom1\Baitapnhom\Thuctapnhomdemo\obj\Debug\Thuctapnhomdemo.csprojResolveAssemblyReference.cache
+E:\Thao\ThucTapNhom1\Baitapnhom\Thuctapnhomdemo\obj\Debug\Thuctapnhomdemo.frmMain.resources
+E:\Thao\ThucTapNhom1\Baitapnhom\Thuctapnhomdemo\obj\Debug\Thuctapnhomdemo.frmPhieunhap.resources
+E:\Thao\ThucTapNhom1\Baitapnhom\Thuctapnhomdemo\obj\Debug\Thuctapnhomdemo.Properties.Resources.resources
+E:\Thao\ThucTapNhom1\Baitapnhom\Thuctapnhomdemo\obj\Debug\Thuctapnhomdemo.csproj.GenerateResource.Cache
+E:\New folder (2)\Thuctapnhomdemo\bin\Debug\Thuctapnhomdemo.exe.config
+E:\New folder (2)\Thuctapnhomdemo\obj\Debug\Thuctapnhomdemo.exe
+E:\New folder (2)\Thuctapnhomdemo\obj\Debug\Thuctapnhomdemo.pdb
+E:\Thao\ThucTapNhom1\ThucTapNhom\Thuctapnhomdemo\bin\Debug\Thuctapnhomdemo.exe.config
+E:\Thao\ThucTapNhom1\ThucTapNhom\Thuctapnhomdemo\obj\Debug\Thuctapnhomdemo.exe
+E:\Thao\ThucTapNhom1\ThucTapNhom\Thuctapnhomdemo\obj\Debug\Thuctapnhomdemo.pdb

@@ -1,0 +1,322 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="QuanlyKhoHang" Class="MydataDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=THAO-PC\SQLEXPRESS;Initial Catalog=QuanlyKhoHang;Integrated Security=True" SettingsObjectName="Thuctapnhomdemo.Properties.Settings" SettingsPropertyName="QuanlyKhoHangConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.tbl_PhieuXuat" Member="tbl_PhieuXuats">
+    <Type Name="tbl_PhieuXuat">
+      <Column Name="Sophieuxuat" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Ngaylapphieu" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Nguoilapphieu" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="Tongtien" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="Makhachhang" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Association Name="tbl_PhieuXuat_tbl_ChiTietPhieuXuat" Member="tbl_ChiTietPhieuXuats" ThisKey="Sophieuxuat" OtherKey="Sophieuxuat" Type="tbl_ChiTietPhieuXuat" />
+      <Association Name="tbl_KhachHang_tbl_PhieuXuat" Member="tbl_KhachHang" ThisKey="Makhachhang" OtherKey="Makhachhang" Type="tbl_KhachHang" IsForeignKey="true" />
+      <Association Name="tbl_NhanVienKho_tbl_PhieuXuat" Member="tbl_NhanVienKho" ThisKey="Nguoilapphieu" OtherKey="MaNV" Type="tbl_NhanVienKho" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_ChiTietPhieuNhap" Member="tbl_ChiTietPhieuNhaps">
+    <Type Name="tbl_ChiTietPhieuNhap">
+      <Column Name="Sophieunhap" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Mahanghoa" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Dongianhap" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="Soluong" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="tbl_HangHoa_tbl_ChiTietPhieuNhap" Member="tbl_HangHoa" ThisKey="Mahanghoa" OtherKey="Mahanghoa" Type="tbl_HangHoa" IsForeignKey="true" />
+      <Association Name="tbl_PhieuNhap_tbl_ChiTietPhieuNhap" Member="tbl_PhieuNhap" ThisKey="Sophieunhap" OtherKey="Sophieunhap" Type="tbl_PhieuNhap" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_ChiTietPhieuXuat" Member="tbl_ChiTietPhieuXuats">
+    <Type Name="tbl_ChiTietPhieuXuat">
+      <Column Name="Sophieuxuat" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Mahanghoa" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Dongiaban" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="Soluong" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="tbl_PhieuXuat_tbl_ChiTietPhieuXuat" Member="tbl_PhieuXuat" ThisKey="Sophieuxuat" OtherKey="Sophieuxuat" Type="tbl_PhieuXuat" IsForeignKey="true" />
+      <Association Name="tbl_HangHoa_tbl_ChiTietPhieuXuat" Member="tbl_HangHoa" ThisKey="Mahanghoa" OtherKey="Mahanghoa" Type="tbl_HangHoa" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_HangHoa" Member="tbl_HangHoas">
+    <Type Name="tbl_HangHoa">
+      <Column Name="Mahanghoa" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Tenhanghoa" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Donvitinh" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Dongia" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="Manhom" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Association Name="tbl_HangHoa_tbl_ChiTietPhieuNhap" Member="tbl_ChiTietPhieuNhaps" ThisKey="Mahanghoa" OtherKey="Mahanghoa" Type="tbl_ChiTietPhieuNhap" />
+      <Association Name="tbl_HangHoa_tbl_ChiTietPhieuXuat" Member="tbl_ChiTietPhieuXuats" ThisKey="Mahanghoa" OtherKey="Mahanghoa" Type="tbl_ChiTietPhieuXuat" />
+      <Association Name="tbl_NhomSanPham_tbl_HangHoa" Member="tbl_NhomSanPham" ThisKey="Manhom" OtherKey="Manhom" Type="tbl_NhomSanPham" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_KhachHang" Member="tbl_KhachHangs">
+    <Type Name="tbl_KhachHang">
+      <Column Name="Makhachhang" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Tenkhachhang" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Diachi" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Sodienthoai" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Association Name="tbl_KhachHang_tbl_PhieuXuat" Member="tbl_PhieuXuats" ThisKey="Makhachhang" OtherKey="Makhachhang" Type="tbl_PhieuXuat" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_KhoHang" Member="tbl_KhoHangs">
+    <Type Name="tbl_KhoHang">
+      <Column Name="Makho" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Tenkho" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="tbl_KhoHang_tbl_NhomSanPham" Member="tbl_NhomSanPhams" ThisKey="Makho" OtherKey="Makho" Type="tbl_NhomSanPham" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_NhaCungCap" Member="tbl_NhaCungCaps">
+    <Type Name="tbl_NhaCungCap">
+      <Column Name="MaNCC" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TenNCC" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Diachi" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Sodienthoai" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Association Name="tbl_NhaCungCap_tbl_PhieuNhap" Member="tbl_PhieuNhaps" ThisKey="MaNCC" OtherKey="MaNCC" Type="tbl_PhieuNhap" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_NhanVienKho" Member="tbl_NhanVienKhos">
+    <Type Name="tbl_NhanVienKho">
+      <Column Name="MaNV" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TenNV" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Sdt" Type="System.String" DbType="VarChar(11)" CanBeNull="true" />
+      <Column Name="Tuoi" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="tbl_NhanVienKho_tbl_PhieuXuat" Member="tbl_PhieuXuats" ThisKey="MaNV" OtherKey="Nguoilapphieu" Type="tbl_PhieuXuat" />
+      <Association Name="tbl_NhanVienKho_tbl_PhieuNhap" Member="tbl_PhieuNhaps" ThisKey="MaNV" OtherKey="Nguoilapphieu" Type="tbl_PhieuNhap" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_NhomSanPham" Member="tbl_NhomSanPhams">
+    <Type Name="tbl_NhomSanPham">
+      <Column Name="Manhom" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Tennhom" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Makho" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Association Name="tbl_NhomSanPham_tbl_HangHoa" Member="tbl_HangHoas" ThisKey="Manhom" OtherKey="Manhom" Type="tbl_HangHoa" />
+      <Association Name="tbl_NhomSanPham_tbl_PhieuNhap" Member="tbl_PhieuNhaps" ThisKey="Manhom" OtherKey="Manhom" Type="tbl_PhieuNhap" />
+      <Association Name="tbl_KhoHang_tbl_NhomSanPham" Member="tbl_KhoHang" ThisKey="Makho" OtherKey="Makho" Type="tbl_KhoHang" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_PhieuNhap" Member="tbl_PhieuNhaps">
+    <Type Name="tbl_PhieuNhap">
+      <Column Name="Sophieunhap" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Ngaylapphieu" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Nguoilapphieu" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="Tongtien" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="Manhom" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="MaNCC" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Association Name="tbl_PhieuNhap_tbl_ChiTietPhieuNhap" Member="tbl_ChiTietPhieuNhaps" ThisKey="Sophieunhap" OtherKey="Sophieunhap" Type="tbl_ChiTietPhieuNhap" />
+      <Association Name="tbl_NhaCungCap_tbl_PhieuNhap" Member="tbl_NhaCungCap" ThisKey="MaNCC" OtherKey="MaNCC" Type="tbl_NhaCungCap" IsForeignKey="true" />
+      <Association Name="tbl_NhomSanPham_tbl_PhieuNhap" Member="tbl_NhomSanPham" ThisKey="Manhom" OtherKey="Manhom" Type="tbl_NhomSanPham" IsForeignKey="true" />
+      <Association Name="tbl_NhanVienKho_tbl_PhieuNhap" Member="tbl_NhanVienKho" ThisKey="Nguoilapphieu" OtherKey="MaNV" Type="tbl_NhanVienKho" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.CTPhieuNhap_DELETE" Method="CTPhieuNhap_DELETE">
+    <Parameter Name="sophieunhap" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="mahanghoa" Type="System.String" DbType="VarChar(10)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PhieuXuat_Them" Method="PhieuXuat_Them">
+    <Parameter Name="sophieuxuat" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="ngaylapphieu" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="nguoilapphieu" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="tongtien" Type="System.Decimal" DbType="Decimal(18,0)" />
+    <Parameter Name="makhachang" Type="System.String" DbType="VarChar(10)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.CTPhieuNhap_EDIT" Method="CTPhieuNhap_EDIT">
+    <Parameter Name="sophieunhap" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="mahanghoa" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="dongianhap" Type="System.Decimal" DbType="Decimal(18,0)" />
+    <Parameter Name="soluong" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.CTPhieuNhap_Them" Method="CTPhieuNhap_Them">
+    <Parameter Name="sophieunhap" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="mahanghoa" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="dongianhap" Type="System.Decimal" DbType="Decimal(18,0)" />
+    <Parameter Name="soluong" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.CTPhieuXuat_DELETE" Method="CTPhieuXuat_DELETE">
+    <Parameter Name="sophieuxuat" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="mahanghoa" Type="System.String" DbType="VarChar(10)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.CTPhieuXuat_EDIT" Method="CTPhieuXuat_EDIT">
+    <Parameter Name="sophieuxuat" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="mahanghoa" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="dongiaban" Type="System.Decimal" DbType="Decimal(18,0)" />
+    <Parameter Name="soluong" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.CTPhieuXuat_Them" Method="CTPhieuXuat_Them">
+    <Parameter Name="sophieuxuat" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="mahanghoa" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="dongiaban" Type="System.Decimal" DbType="Decimal(18,0)" />
+    <Parameter Name="soluong" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.HangHoa_DELETE" Method="HangHoa_DELETE">
+    <Parameter Name="mahh" Type="System.String" DbType="VarChar(10)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.HangHoa_EDIT" Method="HangHoa_EDIT">
+    <Parameter Name="mahh" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="tennhh" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="dongia" Type="System.Decimal" DbType="Decimal(18,0)" />
+    <Parameter Name="donvitinh" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="manhom" Type="System.String" DbType="VarChar(10)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.HangHoa_Them" Method="HangHoa_Them">
+    <Parameter Name="mahh" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="tennhh" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="dongia" Type="System.Decimal" DbType="Decimal(18,0)" />
+    <Parameter Name="donvitinh" Type="System.String" DbType="NVarChar(10)" />
+    <Parameter Name="manhom" Type="System.String" DbType="VarChar(10)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.KhachHang_DELETE" Method="KhachHang_DELETE">
+    <Parameter Name="makh" Type="System.String" DbType="VarChar(10)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.KhachHang_EDIT" Method="KhachHang_EDIT">
+    <Parameter Name="makh" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="tennkh" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="diachi" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="sdt" Type="System.String" DbType="VarChar(10)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.KhachHang_Them" Method="KhachHang_Them">
+    <Parameter Name="makh" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="tennkh" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="diachi" Type="System.String" DbType="NVarChar(10)" />
+    <Parameter Name="sdt" Type="System.String" DbType="VarChar(10)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.KhoHang_DELETE" Method="KhoHang_DELETE">
+    <Parameter Name="makho" Type="System.String" DbType="VarChar(10)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.KhoHang_EDIT" Method="KhoHang_EDIT">
+    <Parameter Name="makho" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="tenkho" Type="System.String" DbType="NVarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.KhoHang_Them" Method="KhoHang_Them">
+    <Parameter Name="makho" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="tenkho" Type="System.String" DbType="NVarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.NhaCungCap_DELETE" Method="NhaCungCap_DELETE">
+    <Parameter Name="mancc" Type="System.String" DbType="VarChar(10)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.NhaCungCap_EDIT" Method="NhaCungCap_EDIT">
+    <Parameter Name="mancc" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="tenncc" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="diachi" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="sdt" Type="System.String" DbType="VarChar(10)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.NhaCungCap_Them" Method="NhaCungCap_Them">
+    <Parameter Name="mancc" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="tenncc" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="diachi" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="sdt" Type="System.String" DbType="VarChar(10)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.NhanVienKho_DELETE" Method="NhanVienKho_DELETE">
+    <Parameter Name="manv" Type="System.String" DbType="VarChar(10)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.NhanVienKho_EDIT" Method="NhanVienKho_EDIT">
+    <Parameter Name="manv" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="tennv" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="tuoi" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="sdt" Type="System.String" DbType="VarChar(10)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.NhanVienKho_Them" Method="NhanVienKho_Them">
+    <Parameter Name="manv" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="tennv" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="tuoi" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="sdt" Type="System.String" DbType="VarChar(10)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.NhonSanPham_DELETE" Method="NhonSanPham_DELETE">
+    <Parameter Name="manhom" Type="System.String" DbType="VarChar(10)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.NhonSanPham_EDIT" Method="NhonSanPham_EDIT">
+    <Parameter Name="manhom" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="tennhom" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="makho" Type="System.String" DbType="VarChar(10)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.NhonSanPham_Them" Method="NhonSanPham_Them">
+    <Parameter Name="manhom" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="tennhom" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="makho" Type="System.String" DbType="VarChar(10)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PhieuNhap_DELETE" Method="PhieuNhap_DELETE">
+    <Parameter Name="sophieunhap" Type="System.String" DbType="VarChar(10)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PhieuNhap_EDIT" Method="PhieuNhap_EDIT">
+    <Parameter Name="sophieunhap" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="ngaylapphieu" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="nguoilapphieu" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="tongtien" Type="System.Decimal" DbType="Decimal(18,0)" />
+    <Parameter Name="manhom" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="mancc" Type="System.String" DbType="VarChar(10)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PhieuNhap_Them" Method="PhieuNhap_Them">
+    <Parameter Name="sophieunhap" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="ngaylapphieu" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="nguoilapphieu" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="tongtien" Type="System.Decimal" DbType="Decimal(18,0)" />
+    <Parameter Name="manhom" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="mancc" Type="System.String" DbType="VarChar(10)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PhieuXuat_DELETE" Method="PhieuXuat_DELETE">
+    <Parameter Name="sophieuxuat" Type="System.String" DbType="VarChar(10)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PhieuXuat_EDIT" Method="PhieuXuat_EDIT">
+    <Parameter Name="sophieuxuat" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="ngaylapphieu" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="nguoilapphieu" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="tongtien" Type="System.Decimal" DbType="Decimal(18,0)" />
+    <Parameter Name="makhachang" Type="System.String" DbType="VarChar(10)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.KH_select" Method="KH_select">
+    <ElementType Name="KH_selectResult">
+      <Column Name="Makhachhang" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="Tenkhachhang" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Diachi" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Sodienthoai" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.HH_select" Method="HH_select">
+    <ElementType Name="HH_selectResult">
+      <Column Name="Mahanghoa" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="Tenhanghoa" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Donvitinh" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Dongia" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="Manhom" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.NV_select" Method="NV_select">
+    <ElementType Name="NV_selectResult">
+      <Column Name="MaNV" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="TenNV" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Sdt" Type="System.String" DbType="VarChar(11)" CanBeNull="true" />
+      <Column Name="Tuoi" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.NSP_select" Method="NSP_select">
+    <ElementType Name="NSP_selectResult">
+      <Column Name="Manhom" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="Tennhom" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Makho" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+</Database>
