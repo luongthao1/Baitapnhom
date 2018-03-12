@@ -1,0 +1,614 @@
+
+
+
+
+--Bài toán d?t ra: Thi?t k? co s? d? li?u Qu?n lý xu?t nh?p kho. qu?n lý Nh?p hàng t? nhà cung c?p, và xu?t hàng cho khách, 
+--khách trong bài toán này không ph?i khách mua l?, mà thu?ng các d?i lý, các siêu th? mua hàng v?i s? lu?ng l?n.
+
+-- T?o database QuanLyNhapXuatKho----------------------
+CREATE DATABASE QuanlyKhoHang
+go
+use QuanlyKhoHang
+
+------------------T?O B?NG B?NG CÂU L?NH--------------------------------------------------
+--1----t?o b?ng tbl_KhoHang-----------------------
+CREATE TABLE tbl_KhoHang
+(
+	Makho  varchar(10) not null primary key,
+	Tenkho nvarchar(50),
+)
+
+--2----t?o b?ng tbl_NhanVienKho--------------------
+CREATE TABLE tbl_NhanVienKho
+(
+	MaNV  varchar(10) not null primary key,
+	TenNV nvarchar(50),
+	Sdt   varchar(11),
+	Tuoi  int,
+)
+
+--3---t?o b?ng tbl_NhaCungCap----------------------
+CREATE TABLE tbl_NhaCungCap
+(
+	MaNCC       varchar(10) not null primary key,
+	TenNCC      nvarchar(50),
+	Diachi      nvarchar(100),
+	Sodienthoai varchar(10),
+) 
+
+--4---t?o b?ng tbl_NhomSanPham---------------------
+CREATE TABLE tbl_NhomSanPham
+(
+	Manhom  varchar(10) not null primary key,
+	Tennhom nvarchar(50),
+	Makho   varchar(10) not null references tbl_KhoHang(Makho)
+)
+
+--5---t?o b?ng tbl_HangHoa-------------------------
+CREATE TABLE tbl_HangHoa
+(
+	Mahanghoa  varchar(10) not null primary key,
+	Tenhanghoa nvarchar(50),
+	Donvitinh  nvarchar(10),
+	Dongia	   Decimal(18,0) not null default 0,
+	Manhom     varchar(10) not null references tbl_NhomSanPham(Manhom)
+)
+
+--6---t?o b?ng tbl_KhachHang-----------------------
+CREATE TABLE tbl_KhachHang
+(
+	Makhachhang  varchar(10) not null primary key,
+	Tenkhachhang Nvarchar(50),
+	Diachi		 Nvarchar(100),
+	Sodienthoai	 varchar(10),
+)
+
+--7---t?o b?ng tbl_PhieuNhap------------------------
+CREATE TABLE tbl_PhieuNhap
+(
+	Sophieunhap   varchar(10) not null primary key,
+	Ngaylapphieu  Datetime,
+	Nguoilapphieu varchar(10) not null references tbl_NhanVienKho(MaNV),
+	Tongtien      decimal(18, 0) default 0,
+	Manhom        varchar(10) not null references tbl_NhomSanPham(Manhom),
+	MaNCC         varchar(10) not null references tbl_NhaCungCap(MaNCC),
+	
+)
+
+--8---t?o b?ng tbl_ChiTietPhieuNhap------------------
+CREATE TABLE tbl_ChiTietPhieuNhap
+(
+	Sophieunhap varchar(10) not null references tbl_PhieuNhap(Sophieunhap),
+	Mahanghoa   varchar(10) not null references tbl_HangHoa(Mahanghoa),
+	Dongianhap      Decimal(18, 0) not null  default 0,
+	Soluong     Int not null,
+	primary key (Sophieunhap, Mahanghoa)
+
+)
+
+--9---t?o b?ng tbl_PhieuXuat------------------
+CREATE TABLE tbl_PhieuXuat
+(
+	Sophieuxuat   varchar(10) not null primary key,
+	Ngaylapphieu  Datetime,
+	Nguoilapphieu varchar(10) not null references tbl_NhanVienKho(MaNV),
+	Tongtien      decimal(18, 0) default 0,
+	Makhachhang   varchar(10) not null references tbl_KhachHang(Makhachhang),
+)
+
+--10---t?o b?ng tbl_ChiTietPhieuXuat------------------
+CREATE TABLE tbl_ChiTietPhieuXuat
+(
+	Sophieuxuat varchar(10) not null references tbl_PhieuXuat(Sophieuxuat),
+	Mahanghoa   varchar(10) not null references tbl_HangHoa(Mahanghoa),
+	Dongiaban      Decimal(18, 0) not null default 0,
+	Soluong     Int not null,
+	primary key (Sophieuxuat, Mahanghoa)
+
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+go
+
+
+----------------------INSERT D? LI?U B?NG CÂU L?NH-------------------------------------------------------------
+
+----------------------------vi?t stored------------------------------------------------------------------------
+
+--1------------		stored Insert Kho Hang --------------------------------------------------------------------
+CREATE PROC KhoHang_Them(@makho varchar(10), @tenkho Nvarchar(50))
+AS
+BEGIN
+	Insert into tbl_KhoHang( Makho, Tenkho)
+	Values (@makho, @tenkho)
+END
+go
+execute KhoHang_Them @makho= 'mk001', @tenkho = N'Kho hàng d? s?'
+execute KhoHang_Them @makho= 'mk002', @tenkho = N'Kho hàng d? gia d?ng'
+execute KhoHang_Them @makho= 'mk003', @tenkho = N'Kho hàng d? di?n t?'
+execute KhoHang_Them @makho= 'mk004', @tenkho = N'Kho hàng v?t li?u xây d?ng'
+execute KhoHang_Them @makho= 'mk005', @tenkho = N'Kho hàng t?ng h?p'
+execute KhoHang_Them @makho= 'mk006', @tenkho = N'Kho hàng t?ng h?p'
+go
+
+
+--2------------stored Insert Nhà Cung C?p ----------------------------------------------------------------------
+CREATE PROC NhaCungCap_Them(@mancc varchar(10), @tenncc Nvarchar(50), @diachi Nvarchar(100), @sdt varchar(10))
+AS
+BEGIN
+	Insert into tbl_NhaCungCap( MaNCC, TenNCC, Diachi, Sodienthoai)
+	Values (@mancc, @tenncc, @diachi, @sdt)
+END
+go
+execute NhaCungCap_Them @mancc='ncc001', @tenncc=N'Vi?t Nam Mô Bai', @diachi=N'Hà N?i', @sdt='1122334455'
+execute NhaCungCap_Them @mancc='ncc002', @tenncc=N'Vi?t Nam E Lai', @diachi=N'N?i Bài', @sdt='1122334455'
+execute NhaCungCap_Them @mancc='ncc003', @tenncc=N'Siêu Th? Ði?n Máy Xanh', @diachi=N'Hà N?i', @sdt='1122334455'
+execute NhaCungCap_Them @mancc='ncc004', @tenncc=N'Công Ty Mi Ph?m Hà Th?ch', @diachi=N'Phú Th?', @sdt='1122334455'
+execute NhaCungCap_Them @mancc='ncc005', @tenncc=N'Khu Công Nghi?p B?c Thang Long', @diachi=N'Hà N?i', @sdt='1122334455'
+execute NhaCungCap_Them @mancc='ncc006', @tenncc=N'Công Ty Bánh K?o H?i Hà', @diachi=N'Hà N?i', @sdt='1122334455'
+execute NhaCungCap_Them @mancc='ncc007', @tenncc=N'Công Ty Nhôm Sông H?ng', @diachi=N'Vi?t Trì', @sdt='1122334455'
+execute NhaCungCap_Them @mancc='ncc008', @tenncc=N'Công Ty C? Ph?n DATAVIET', @diachi=N'Hà N?i', @sdt='1122334455'
+execute NhaCungCap_Them @mancc='ncc009', @tenncc=N'Hà Nam MoBISITOi', @diachi=N'Hà Nam', @sdt='1122334455'
+execute NhaCungCap_Them @mancc='ncc010', @tenncc=N'Qu?t Lâm rì s?t', @diachi=N'Hà Nam', @sdt='1122334455'
+execute NhaCungCap_Them @mancc='ncc011', @tenncc=N'Qu?t Lâm rì s?t', @diachi=N'Hà Nam', @sdt='1122334455'
+go
+
+
+
+--3------------stored Insert Nhân Viên Kho ----------------------------------------------------------------------
+CREATE PROC NhanVienKho_Them(@manv varchar(10), @tennv Nvarchar(50), @tuoi Nvarchar(100), @sdt varchar(10))
+AS
+BEGIN
+	Insert into tbl_NhanVienKho( MaNV, TenNV, Tuoi, Sdt)
+	Values (@manv, @tennv, @tuoi, @sdt)
+END
+go
+execute NhanVienKho_Them @manv='nv001', @tennv=N'Tr?n Van A',     @tuoi=12, @sdt='1122334455'
+execute NhanVienKho_Them @manv='nv002', @tennv=N'NGuy?n Th? B',   @tuoi=13, @sdt='1122334455'
+execute NhanVienKho_Them @manv='nv003', @tennv=N'Hà Tu?n D',      @tuoi=14, @sdt='1122334455'
+execute NhanVienKho_Them @manv='nv004', @tennv=N'Doãn Chí Bình',  @tuoi=15, @sdt='1122334455'
+execute NhanVienKho_Them @manv='nv005', @tennv=N'Tri?u Trí Kính', @tuoi=16, @sdt='1122334455'
+
+go
+--4------------stored Insert Nhóm s?n ph?m ----------------------------------------------------------------------
+CREATE PROC NhonSanPham_Them(@manhom varchar(10), @tennhom Nvarchar(50), @makho varchar(10))
+AS
+BEGIN
+	Insert into tbl_NhomSanPham( Manhom, Tennhom, Makho)
+	Values (@manhom, @tennhom, @makho)
+END
+go
+execute NhonSanPham_Them @manhom='nsp001' , @tennhom=N'Ð? Gia D?ng',@makho= 'mk001'
+execute NhonSanPham_Them @manhom='nsp002' , @tennhom=N'Ð? Mi Ngh?', @makho= 'mk001'
+execute NhonSanPham_Them @manhom='nsp003' , @tennhom=N'S?n Ph?m Di Ð?ng',@makho= 'mk002'
+execute NhonSanPham_Them @manhom='nsp004' , @tennhom=N'S?n Ph?m Ð? S?',@makho= 'mk002'
+execute NhonSanPham_Them @manhom='nsp005' , @tennhom=N'Ð? Tiêu Dùng',@makho= 'mk002'
+execute NhonSanPham_Them @manhom='nsp006' , @tennhom=N'Ð? Tiêu Dùng',@makho= 'mk002'
+
+go
+
+
+--5------------stored Insert Hàng hóa---------------------------------------------------------------------------
+CREATE PROC HangHoa_Them(@mahh varchar(10), @tennhh Nvarchar(50), @dongia decimal(18,0), @donvitinh nvarchar(10), @manhom varchar(10))
+AS
+BEGIN
+	Insert into tbl_HangHoa( Mahanghoa, Tenhanghoa, Dongia, Donvitinh, Manhom)
+	Values (@mahh, @tennhh, @dongia, @donvitinh, @manhom)
+END
+go
+execute HangHoa_Them @mahh='sp001', @tennhh=N'T? L?nh ToShiBa',    @dongia=10000, @donvitinh=N'Chi?c', @manhom='nsp001'
+execute HangHoa_Them @mahh='sp002', @tennhh=N'T? L?nh Tàu',        @dongia=10000, @donvitinh=N'Chi?c', @manhom='nsp001'
+execute HangHoa_Them @mahh='sp003', @tennhh=N'T? Qu?t Tr?n',       @dongia=10000, @donvitinh=N'Chi?c', @manhom='nsp001'
+execute HangHoa_Them @mahh='sp004', @tennhh=N'Ði?u Hòa',           @dongia=10000, @donvitinh=N'Chi?c', @manhom='nsp001'
+execute HangHoa_Them @mahh='sp005', @tennhh=N'Qu?t Ði?n',          @dongia=10000, @donvitinh=N'Chi?c', @manhom='nsp001'
+execute HangHoa_Them @mahh='sp006', @tennhh=N'Ði?n Tho?i NOKIA',   @dongia=10000, @donvitinh=N'Chi?c', @manhom='nsp003'
+execute HangHoa_Them @mahh='sp007', @tennhh=N'Ði?n Tho?i SAMSUNG', @dongia=10000, @donvitinh=N'Chi?c', @manhom='nsp003'
+execute HangHoa_Them @mahh='sp008', @tennhh=N'Ði?n Tho?i Tàu',     @dongia=10000, @donvitinh=N'Chi?c', @manhom='nsp003'
+execute HangHoa_Them @mahh='sp009', @tennhh=N'Máy Tính Dell',      @dongia=10000, @donvitinh=N'Chi?c', @manhom='nsp003'
+execute HangHoa_Them @mahh='sp010', @tennhh=N'Tranh Ðông H?',      @dongia=10000, @donvitinh=N'Chi?c', @manhom='nsp002'
+execute HangHoa_Them @mahh='sp011', @tennhh=N'H?i S?n Ðông L?nh',  @dongia=10000, @donvitinh=N'Chi?c', @manhom='nsp005'
+execute HangHoa_Them @mahh='sp012', @tennhh=N'Bình Hoa S?',        @dongia=10000, @donvitinh=N'Chi?c', @manhom='nsp004'
+execute HangHoa_Them @mahh='sp013', @tennhh=N'Bat Ðia Bát Tràng',  @dongia=10000, @donvitinh=N'Chi?c', @manhom='nsp004'
+execute HangHoa_Them @mahh='sp014', @tennhh=N'Bat Ðia Bát Tràng',  @dongia=10000, @donvitinh=N'Chi?c', @manhom='nsp004'
+go
+
+
+
+--6------------stored Insert Khách Hàng--------------------------------------------------------------------------
+CREATE PROC KhachHang_Them(@makh varchar(10), @tennkh Nvarchar(50), @diachi nvarchar(10), @sdt varchar(10))
+AS
+BEGIN
+	Insert into tbl_KhachHang( Makhachhang, Tenkhachhang, Diachi, Sodienthoai)
+	Values (@makh, @tennkh, @diachi, @sdt)
+END
+go
+execute KhachHang_Them @makh='kh001', @tennkh=N'Tr?n Ð?c M?nh',  @diachi=N'Phú Th?', @sdt='012345678'
+execute KhachHang_Them @makh='kh002', @tennkh=N'Tr?n Qu?c Dân',  @diachi=N'Phú Th?', @sdt='012345678'
+execute KhachHang_Them @makh='kh003', @tennkh=N'Tr?n Anh Tông',  @diachi=N'Phú Th?', @sdt='012345678'
+execute KhachHang_Them @makh='kh004', @tennkh=N'Tr?n Ð?c Nam',   @diachi=N'Phú Th?', @sdt='012345678'
+execute KhachHang_Them @makh='kh005', @tennkh=N'Tr?n Qu?c To?n', @diachi=N'Phú Th?', @sdt='012345678'
+execute KhachHang_Them @makh='kh006', @tennkh=N'Tr?n Qu?c To?n', @diachi=N'Phú Th?', @sdt='012345678'
+go
+
+
+
+--7------------stored Insert Phi?u Nh?p---------------------------------------------------------------------------
+CREATE PROC PhieuNhap_Them(@sophieunhap varchar(10), @ngaylapphieu date, @nguoilapphieu varchar(10), @tongtien decimal(18,0), @manhom varchar(10),@mancc varchar(10))
+AS
+BEGIN
+	Insert into tbl_PhieuNhap( Sophieunhap, Ngaylapphieu, Nguoilapphieu, Tongtien, Manhom, MaNCC)
+	Values (@sophieunhap, @ngaylapphieu, @nguoilapphieu, @tongtien, @manhom, @mancc)
+END
+go
+execute PhieuNhap_Them @sophieunhap='spn001', @ngaylapphieu='2015-12-12', @nguoilapphieu='nv001', @tongtien=5000000,   @manhom='nsp001',@mancc='ncc001'
+execute PhieuNhap_Them @sophieunhap='spn002', @ngaylapphieu='2015-10-12', @nguoilapphieu='nv001', @tongtien=5000000,   @manhom='nsp005',@mancc='ncc002'
+execute PhieuNhap_Them @sophieunhap='spn003', @ngaylapphieu='2014-05-12', @nguoilapphieu='nv001', @tongtien=23000000,  @manhom='nsp001',@mancc='ncc003'
+execute PhieuNhap_Them @sophieunhap='spn004', @ngaylapphieu='2016-12-12', @nguoilapphieu='nv001', @tongtien=5005000,	  @manhom='nsp003',@mancc='ncc004'
+execute PhieuNhap_Them @sophieunhap='spn005', @ngaylapphieu='2017-02-12', @nguoilapphieu='nv001', @tongtien=134000000, @manhom='nsp002',@mancc='ncc005'
+go
+
+
+
+
+--8------------stored Insert Phi?u Xu?t---------------------------------------------------------------------------
+CREATE PROC PhieuXuat_Them(@sophieuxuat varchar(10), @ngaylapphieu date, @nguoilapphieu varchar(10), @tongtien decimal(18,0), @makhachang varchar(10))
+AS
+BEGIN
+	Insert into tbl_PhieuXuat( Sophieuxuat, Ngaylapphieu, Nguoilapphieu, Tongtien, Makhachhang)
+	Values (@sophieuxuat, @ngaylapphieu,@nguoilapphieu, @tongtien, @makhachang)
+END
+go
+execute PhieuXuat_Them @sophieuxuat='spx001', @ngaylapphieu='2015-12-12', @nguoilapphieu='nv001', @tongtien=20000000,  @makhachang='kh001'
+execute PhieuXuat_Them @sophieuxuat='spx002', @ngaylapphieu='2014-12-12', @nguoilapphieu='nv001', @tongtien=120000000, @makhachang='kh002'
+execute PhieuXuat_Them @sophieuxuat='spx003', @ngaylapphieu='2013-12-12', @nguoilapphieu='nv001', @tongtien=230000000, @makhachang='kh003'
+execute PhieuXuat_Them @sophieuxuat='spx004', @ngaylapphieu='2012-12-12', @nguoilapphieu='nv002', @tongtien=250000000, @makhachang='kh004'
+execute PhieuXuat_Them @sophieuxuat='spx005', @ngaylapphieu='2011-12-12', @nguoilapphieu='nv002', @tongtien=2000000,   @makhachang='kh005'
+execute PhieuXuat_Them @sophieuxuat='spx007', @ngaylapphieu='2011-12-12', @nguoilapphieu='nv001', @tongtien=0,		  @makhachang='kh005'
+
+
+
+
+--9------------stored Insert Chi ti?t phi?u nh?p-------------------------------------------------------------------
+go
+CREATE PROC CTPhieuNhap_Them(@sophieunhap varchar(10), @mahanghoa varchar(10),@dongianhap decimal(18,0), @soluong int)
+AS
+BEGIN
+	Insert into tbl_ChiTietPhieuNhap( Sophieunhap, Mahanghoa, Dongianhap, Soluong)
+	Values (@sophieunhap, @mahanghoa, @dongianhap, @soluong)
+END
+go
+execute CTPhieuNhap_Them @sophieunhap='spn002', @mahanghoa='sp001', @dongianhap=400000, @soluong=1
+execute CTPhieuNhap_Them @sophieunhap='spn001', @mahanghoa='sp002', @dongianhap=4000000, @soluong=13
+
+--10------------stored Insert Chi ti?t phi?u xu?t-------------------------------------------------------------------
+go
+CREATE PROC CTPhieuXuat_Them(@sophieuxuat varchar(10), @mahanghoa varchar(10),@dongiaban decimal(18,0), @soluong int)
+AS
+BEGIN
+	Insert into tbl_ChiTietPhieuXuat( Sophieuxuat, Mahanghoa, Dongiaban, Soluong)
+	Values (@sophieuxuat, @mahanghoa, @dongiaban, @soluong)
+END
+go
+execute CTPhieuXuat_Them @sophieuxuat='spx007', @mahanghoa='sp001', @dongiaban=120000, @soluong=2
+execute CTPhieuXuat_Them @sophieuxuat='spx007', @mahanghoa='sp002', @dongiaban=100000, @soluong=1
+execute CTPhieuXuat_Them @sophieuxuat='spx007', @mahanghoa='sp003', @dongiaban=100000, @soluong=10
+execute CTPhieuXuat_Them @sophieuxuat='spx007', @mahanghoa='sp007', @dongiaban=100000, @soluong=5
+go
+
+
+
+
+
+
+
+----------------------UPDATE D? LI?U B?NG CÂU L?NH-----------------------------------------------------------
+
+----------------------------vi?t stored----------------------------------------------------------------------
+
+--1------------stored Update Kho Hàng -----------------------------------------------------------------------
+go
+CREATE PROC KhoHang_EDIT(@makho varchar(10), @tenkho Nvarchar(50))
+AS
+BEGIN
+	Update tbl_KhoHang
+	set Tenkho=@tenkho
+	Where Makho=@makho
+END
+go
+--execute KhoHang_EDIT @makho= 'mk001', @tenkho = N'Kho hàng d? s?'
+go
+
+
+--2------------stored Update Nhà Cung C?p -------------------------------------------------------------------
+go
+CREATE PROC NhaCungCap_EDIT(@mancc varchar(10), @tenncc Nvarchar(50), @diachi Nvarchar(100), @sdt varchar(10))
+AS
+BEGIN
+	Update tbl_NhaCungCap
+	Set TenNCC=@tenncc, Diachi= @diachi, Sodienthoai=@sdt
+	Where MaNCC = @mancc
+END
+go
+execute NhaCungCap_EDIT @mancc='ncc001', @tenncc=N'Vi?t Nam Mô Bai', @diachi=N'Hà N?i', @sdt='1122334455'
+go
+
+
+--3------------stored Update Nhân Viên Kho -----------------------------------------------------------------
+go
+CREATE PROC NhanVienKho_EDIT(@manv varchar(10), @tennv Nvarchar(50), @tuoi Nvarchar(100), @sdt varchar(10))
+AS
+BEGIN
+	Update tbl_NhanVienKho
+	Set TenNV=@tennv, Tuoi= @tuoi, Sdt=@sdt
+	Where MaNV = @manv
+END
+go
+execute NhanVienKho_EDIT @manv='nv001', @tennv=N'Tr?n Ð?c M?nh',     @tuoi=25, @sdt='01658942987'
+go
+
+
+--4------------stored Update Nhóm S?n Ph?m ----------------------------------------------------------------
+go
+CREATE PROC NhonSanPham_EDIT(@manhom varchar(10), @tennhom Nvarchar(50), @makho varchar(10))
+AS
+BEGIN
+	Update tbl_NhomSanPham
+	Set Tennhom=@tennhom, Makho = @makho
+	Where Manhom = @manhom
+
+END
+go
+execute NhonSanPham_EDIT @manhom='nsp001' , @tennhom=N'Ð? Gia D?ng', @makho='mk005'
+go
+
+
+--5------------stored Update Hàng hóa---------------------------------------------------------------------
+go
+CREATE PROC HangHoa_EDIT(@mahh varchar(10), @tennhh Nvarchar(50),@dongia decimal(18,0), @donvitinh varchar(10), @manhom varchar(10))
+AS
+BEGIN
+	Update tbl_HangHoa
+	Set Tenhanghoa = @tennhh, Donvitinh=@donvitinh, Manhom=@manhom, Dongia=@dongia
+	Where Mahanghoa=@mahh
+
+END
+go
+execute HangHoa_EDIT @mahh='sp001', @tennhh=N'T? L?nh ToShiBa', @donvitinh=N'Chiec', @manhom='nsp001',@dongia=120000
+go
+
+
+--6------------stored Update Khách Hàng--------------------------------------------------------------------
+go
+CREATE PROC KhachHang_EDIT(@makh varchar(10), @tennkh Nvarchar(50), @diachi varchar(10), @sdt varchar(10))
+AS
+BEGIN
+	Update tbl_KhachHang
+	Set Tenkhachhang = @tennkh, Diachi=@diachi, Sodienthoai=@sdt
+	Where Makhachhang=@makh
+END
+go
+execute KhachHang_EDIT @makh='kh001', @tennkh=N'Tr?n Ð?c M?nh', @diachi=N'Phú Th?', @sdt='012345678'
+go
+
+
+--7------------stored Update Phi?u Nh?p--------------------------------------------------------------------
+go
+CREATE PROC PhieuNhap_EDIT(@sophieunhap varchar(10), @ngaylapphieu date, @nguoilapphieu varchar(10), @tongtien decimal(18,0), @manhom varchar(10),@mancc varchar(10))
+AS
+BEGIN
+	Update tbl_PhieuNhap
+	Set Ngaylapphieu = @ngaylapphieu, Nguoilapphieu=@nguoilapphieu, Tongtien=@tongtien, Manhom=@manhom, MaNCC=@mancc
+	Where Sophieunhap=@sophieunhap
+END
+go
+execute PhieuNhap_EDIT @sophieunhap='spn001', @ngaylapphieu='2015-12-12', @nguoilapphieu='nv001', @tongtien=5000000, @manhom='nsp001',@mancc='ncc001'
+go
+
+
+--8------------stored Update Phi?u Xu?t--------------------------------------------------------------------
+go
+CREATE PROC PhieuXuat_EDIT(@sophieuxuat varchar(10), @ngaylapphieu date, @nguoilapphieu varchar(10), @tongtien decimal(18,0), @makhachang varchar(10))
+AS
+BEGIN
+	Update tbl_PhieuXuat
+	Set Ngaylapphieu = @ngaylapphieu, Nguoilapphieu=@nguoilapphieu, Tongtien=@tongtien, Makhachhang=@makhachang
+	Where Sophieuxuat=@sophieuxuat
+END
+go
+execute PhieuXuat_EDIT @sophieuxuat='spx001', @ngaylapphieu='2015-12-12',@nguoilapphieu='nv001', @tongtien=20000000, @makhachang='kh001'
+go
+
+
+--9------------stored Update Chi ti?t phi?u nh?p-------------------------------------------------------------
+go
+CREATE PROC CTPhieuNhap_EDIT(@sophieunhap varchar(10), @mahanghoa varchar(10),@dongianhap decimal(18,0), @soluong int)
+AS
+BEGIN
+	Update tbl_ChiTietPhieuNhap
+	Set Dongianhap = @dongianhap,Soluong=@soluong
+	Where Sophieunhap=@sophieunhap AND Mahanghoa=@mahanghoa
+END
+go
+execute CTPhieuNhap_EDIT @sophieunhap='spn007', @mahanghoa='sp001', @dongianhap=3400000, @soluong=1
+go
+
+
+--10------------stored Update Chi ti?t phi?u xu?t--------------------------------------------------------------
+go
+CREATE PROC CTPhieuXuat_EDIT(@sophieuxuat varchar(10), @mahanghoa varchar(10),@dongiaban decimal(18,0), @soluong int)
+AS
+BEGIN
+	Update tbl_ChiTietPhieuXuat
+	Set Dongiaban = @dongiaban,Soluong=@soluong
+	Where Sophieuxuat=@sophieuxuat AND Mahanghoa=@mahanghoa
+END
+go
+execute CTPhieuXuat_EDIT @sophieuxuat='spx007', @mahanghoa='sp001', @dongiaban=1287000, @soluong=2
+go
+
+
+
+
+
+
+
+
+----------------------DELETE D? LI?U B?NG CÂU L?NH------------------------------------------------------------
+
+----------------------------vi?t Delete-----------------------------------------------------------------------
+
+--1------------stored Delete Kho Hang ------------------------------------------------------------------------
+go
+CREATE PROC KhoHang_DELETE(@makho varchar(10))
+AS
+BEGIN
+	DELETE FROM tbl_KhoHang Where (Makho=@makho)
+END
+go
+execute KhoHang_DELETE @makho= 'mk006'
+go
+
+
+--2------------stored Delete Nhà Cung C?p --------------------------------------------------------------------
+go
+CREATE PROC NhaCungCap_DELETE(@mancc varchar(10))
+AS
+BEGIN
+	DELETE FROM tbl_NhaCungCap Where (MaNCC=@mancc)
+END
+go
+execute NhaCungCap_DELETE @mancc='ncc011'
+
+--3------------stored Delete Nhân Viên Kho --------------------------------------------------------------------
+go
+CREATE PROC NhanVienKho_DELETE(@manv varchar(10))
+AS
+BEGIN
+	DELETE FROM tbl_NhanVienKho Where (MaNV=@manv)
+
+END
+go
+execute NhanVienKho_DELETE @mancc='ncc005'
+
+--4------------stored Delete Nhóm S?n ph?m -------------------------------------------------------------------
+go
+CREATE PROC NhonSanPham_DELETE(@manhom varchar(10))
+AS
+BEGIN
+	DELETE FROM tbl_NhomSanPham Where (Manhom=@manhom)
+END
+go
+execute NhonSanPham_DELETE @manhom='nsp006'
+
+
+--5------------stored Delete Hàng hóa-------------------------------------------------------------------------
+go
+CREATE PROC HangHoa_DELETE(@mahh varchar(10))
+AS
+BEGIN
+	DELETE FROM tbl_HangHoa Where (Mahanghoa=@mahh)
+END
+go
+execute HangHoa_DELETE @mahh='sp014'
+
+--6------------stored Delete Khách Hàng-----------------------------------------------------------------------
+go
+CREATE PROC KhachHang_DELETE(@makh varchar(10))
+AS
+BEGIN
+	DELETE FROM tbl_KhachHang Where (Makhachhang=@makh)
+END
+go
+execute KhachHang_DELETE @makh='kh006'
+
+--7------------stored Delete Phi?u Nh?p-----------------------------------------------------------------------
+go
+CREATE PROC PhieuNhap_DELETE(@sophieunhap varchar(10))
+AS
+BEGIN
+	DELETE FROM tbl_PhieuNhap Where (Sophieunhap=@sophieunhap)
+END
+go
+execute PhieuNhap_DELETE @sophieunhap='spn006'
+
+--8------------stored Delete Phi?u Xu?t-----------------------------------------------------------------------
+go
+CREATE PROC PhieuXuat_DELETE(@sophieuxuat varchar(10))
+AS
+BEGIN
+	DELETE FROM tbl_PhieuXuat Where (Sophieuxuat=@sophieuxuat)
+END
+go
+execute PhieuXuat_DELETE @sophieuxuat='spx008'
+
+--9------------stored Delete Chi ti?t phi?u nh?p--------------------------------------------------------------
+go
+CREATE PROC CTPhieuNhap_DELETE(@sophieunhap varchar(10), @mahanghoa varchar(10))
+AS
+BEGIN
+	DELETE FROM tbl_ChiTietPhieuNhap Where (Sophieunhap=@sophieunhap AND  Mahanghoa=@mahanghoa)
+END
+go
+execute CTPhieuNhap_DELETE @sophieunhap='spn007', @mahanghoa='sp001'
+
+
+--10------------stored Delete Chi ti?t phi?u xu?t-------------------------------------------------------------
+go
+CREATE PROC CTPhieuXuat_DELETE(@sophieuxuat varchar(10), @mahanghoa varchar(10))
+AS
+BEGIN
+	DELETE FROM tbl_ChiTietPhieuXuat Where (Sophieuxuat=@sophieuxuat AND  Mahanghoa=@mahanghoa)
+END
+go
+execute CTPhieuXuat_DELETE @sophieuxuat='spx007', @mahanghoa='sp001'
+
+
+
+--truy v?n hàng hóa
+go
+create proc HH_select
+as
+begin
+select * from tbl_HangHoa
+end
+
+
+
+--truy v?n khách hàng
+go
+create proc KH_select
+as
+begin
+select * from tbl_KhachHang
+end
+
+
+-- truy v?n nhóm s?n ph?m
+
+go
+create proc NSP_select
+as
+begin
+select * from tbl_NhomSanPham
+end
+
+--- truy v?n nhân viên kho
+
+go
+create proc NV_select
+as
+begin
+select * from tbl_NhanVienKho
+end
